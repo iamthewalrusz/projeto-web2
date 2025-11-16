@@ -1,6 +1,6 @@
 # projeto-web2
 
-### Instruções de uso:
+### Instruções de uso
 
 ## Front-end
 - Acesse a pasta frontend/agora
