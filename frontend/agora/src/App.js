@@ -1,10 +1,22 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Route, Routes } from 'react-router-dom';
+
+import HomePage from './pages/HomePage';
+import Login from './pages/Login';
+import Cadastrar from './pages/Cadastrar';
+import Perfil from './pages/Perfil';
+import Grupo from './pages/Grupo';
 
 function App() {
   return (
     <Box>
-      <Typography component={'h1'} sx={{fontSize: '2rem'}} >Hello World!</Typography>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/cadastrar' element={<Cadastrar />} />
+        <Route path='/perfil' element={<Perfil />} />
+        <Route path='/grupo' element={<Grupo />} />
+      </Routes>
     </Box>
   );
 }
