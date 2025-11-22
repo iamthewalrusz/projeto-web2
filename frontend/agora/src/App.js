@@ -14,8 +14,8 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cadastrar' element={<Cadastrar />} />
-        <Route path='/perfil' element={<Perfil />} />
-        <Route path='/grupo' element={<Grupo />} />
+        <Route path='/perfil/:username' element={<Perfil />} />
+        <Route path='/grupo/:nomeGrupo' element={<Grupo />} />
       </Routes>
     </Box>
   );

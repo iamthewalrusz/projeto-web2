@@ -4,13 +4,22 @@ import './style/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from './contexts/ThemeContext';
+import GreekColumns from './components/GreekColumns';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+
+    <ThemeProvider>
+      <CssBaseline />
+      <BrowserRouter>
+        <GreekColumns>
+          <App />
+        </GreekColumns>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
