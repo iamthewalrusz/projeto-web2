@@ -29,13 +29,18 @@ async function createPost(req, res, next) {
   try {
     const { texto, autorId, grupoId } = req.body;
 
-    if (!texto || !autorId || !grupoId) {
+    if (!texto || !autorId) {
       return res.status(400).json({
-        error: 'texto, autorId e grupoId são obrigatórios'
+        error: 'texto e autorId são obrigatórios'
       });
     }
 
-    const post = await PostModel.createPost({ texto, autorId, grupoId });
+    const post = await PostModel.createPost({
+      texto,
+      autorId,
+      grupoId: grupoId ?? null
+    });
+
     res.status(201).json(post);
   } catch (err) {
     next(err);
