@@ -6,17 +6,18 @@
 
 - Node.js instalado
 - Conta e banco configurados no NeonDB
+- Connection string do NeonDB no .env do backend
 
 ---
 
-## Configuração do back-end
+## 🧩 Configuração do back-end
 - Abra um terminal (**cmd** ou PowerShell)
 - Acesse a pasta do back-end: cd backend
 - Instale as dependências: npm install
 - Inicie o servidor back-end: npm run dev
 - Back-end disponível em: http://localhost:4000
 
-## Configuração do front-end
+## 🎨 Configuração do front-end
 - Abra outro terminal: (**cmd** ou PowerShell)
 - Acesse a pasta front-end: cd frontend
 - Instale as dependências: npm install
