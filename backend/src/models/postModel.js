@@ -23,7 +23,7 @@ async function getAllPosts({ grupoId, autorId } = {}) {
             g.id AS grupo_id, g.nome AS grupo_nome
      FROM posts p
      JOIN usuarios u ON p.autor_id = u.id
-     JOIN grupos g ON p.grupo_id = g.id
+     LEFT JOIN grupos g ON p.grupo_id = g.id
      ${where}
      ORDER BY p.created_at DESC`,
     params
@@ -38,7 +38,7 @@ async function getPostById(id) {
             g.id AS grupo_id, g.nome AS grupo_nome
      FROM posts p
      JOIN usuarios u ON p.autor_id = u.id
-     JOIN grupos g ON p.grupo_id = g.id
+     LEFT JOIN grupos g ON p.grupo_id = g.id
      WHERE p.id = $1`,
     [id]
   );
@@ -51,7 +51,7 @@ async function createPost({ texto, autorId, grupoId }) {
     `INSERT INTO posts (texto, autor_id, grupo_id)
      VALUES ($1, $2, $3)
      RETURNING id, texto, created_at, autor_id, grupo_id`,
-    [texto, autorId, grupoId]
+    [texto, autorId, grupoId || null]
   );
   return result.rows[0];
 }
@@ -83,4 +83,5 @@ module.exports = {
   createPost,
   updatePost,
   deletePost
+
 };
