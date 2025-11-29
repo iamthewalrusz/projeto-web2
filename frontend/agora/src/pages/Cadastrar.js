@@ -1,10 +1,17 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Header from "../components/Header";
+import CadastroModal from "../components/CadastroModal"
 
 export default function Cadastrar() {
   return (
     <Box>
-      <Typography>Cadastrar</Typography>
+      <Header />
+
+      <Box my={14}>
+
+        <CadastroModal/>
+        
+      </Box>
     </Box>
   )
 }

@@ -1,10 +1,17 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Header from "../components/Header";
+import LoginModal from "../components/LoginModal";
 
 export default function Login() {
   return (
     <Box>
-      <Typography>Login</Typography>
+      <Header />
+
+      <Box my={14}>
+
+        <LoginModal/>
+
+      </Box>
     </Box>
   )
 }
