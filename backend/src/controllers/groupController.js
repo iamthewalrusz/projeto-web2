@@ -4,7 +4,8 @@ const GroupModel = require('../models/groupModel');
 // GET /api/groups
 async function listGroups(req, res, next) {
   try {
-    const groups = await GroupModel.getAllGroups();
+    const { nome } = req.query;
+    const groups = await GroupModel.getAllGroups({ nome });
     res.json(groups);
   } catch (err) {
     next(err);
@@ -43,10 +44,22 @@ async function createGroup(req, res, next) {
 async function updateGroup(req, res, next) {
   try {
     const { id } = req.params;
-    const { nome, descricao } = req.body;
+    const { nome, descricao, userId } = req.body; // userId do frontend
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Autenticação necessária.' });
+    }
+
+    const group = await GroupModel.getGroupById(id);
+    if (!group) {
+      return res.status(404).json({ error: 'Grupo não encontrado' });
+    }
+
+    if (group.owner_id !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida. Você não é o criador deste grupo.' });
+    }
 
     const updated = await GroupModel.updateGroup(id, { nome, descricao });
-    if (!updated) return res.status(404).json({ error: 'Grupo não encontrado' });
 
     res.json(updated);
   } catch (err) {
@@ -58,9 +71,22 @@ async function updateGroup(req, res, next) {
 async function deleteGroup(req, res, next) {
   try {
     const { id } = req.params;
+    const { userId } = req.body; // userId do frontend
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Autenticação necessária.' });
+    }
+
+    const group = await GroupModel.getGroupById(id);
+    if (!group) {
+      return res.status(404).json({ error: 'Grupo não encontrado' });
+    }
+
+    if (group.owner_id !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida. Você não é o criador deste grupo.' });
+    }
 
     const deleted = await GroupModel.deleteGroup(id);
-    if (!deleted) return res.status(404).json({ error: 'Grupo não encontrado' });
 
     res.json({ message: 'Grupo deletado com sucesso' });
   } catch (err) {

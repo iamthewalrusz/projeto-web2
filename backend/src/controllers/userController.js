@@ -6,7 +6,8 @@ const { hashPassword, comparePassword } = require('../utils/password');
 // GET /api/users
 async function listUsers(req, res, next) {
   try {
-    const users = await UserModel.getAllUsers();
+    const { username } = req.query; // Ex: /api/users?username=joao
+    const users = await UserModel.getAllUsers({ username });
     res.json(users);
   } catch (err) {
     next(err);
@@ -52,7 +53,12 @@ async function createUser(req, res, next) {
 async function updateUser(req, res, next) {
   try {
     const { id } = req.params;
-    const { username, email } = req.body;
+    const { username, email, userId } = req.body; // userId do frontend
+
+    // Autorização: um usuário só pode editar a si mesmo
+    if (!userId || parseInt(id, 10) !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida.' });
+    }
 
     const updated = await UserModel.updateUser(id, { username, email });
     if (!updated) return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -67,6 +73,12 @@ async function updateUser(req, res, next) {
 async function deleteUser(req, res, next) {
   try {
     const { id } = req.params;
+    const { userId } = req.body; // userId do frontend
+
+    // Autorização: um usuário só pode deletar a si mesmo
+    if (!userId || parseInt(id, 10) !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida.' });
+    }
 
     const deleted = await UserModel.deleteUser(id);
     if (!deleted) return res.status(404).json({ error: 'Usuário não encontrado' });

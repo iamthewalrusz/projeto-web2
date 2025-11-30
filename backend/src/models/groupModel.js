@@ -1,16 +1,38 @@
 // src/models/groupModel.js
 const db = require('../config/db');
 
-// Lista todos os grupos
-async function getAllGroups() {
-  const result = await db.query(
-    `SELECT g.id, g.nome, g.descricao, g.created_at,
+async function getAllGroups({ nome } = {}) {
+  let queryText = `SELECT g.id, g.nome, g.descricao, g.created_at,
             u.id AS owner_id, u.username AS owner_username
      FROM grupos g
-     LEFT JOIN usuarios u ON g.owner_id = u.id
-     ORDER BY g.nome ASC`
-  );
-  return result.rows;
+     LEFT JOIN usuarios u ON g.owner_id = u.id`;
+  const params = [];
+
+  if (nome) {
+    params.push(nome);
+    queryText += ` WHERE g.nome = $1`;
+  }
+
+  queryText += ' ORDER BY g.nome ASC';
+
+  const result = await db.query(queryText, params);
+
+  // Se estamos buscando um grupo específico por nome, vamos incluir os membros
+  if (nome && result.rows.length > 0) {
+    const group = result.rows[0];
+    const membersResult = await db.query(
+      `SELECT u.id, u.username
+       FROM usuarios_grupos ug
+       JOIN usuarios u ON ug.usuario_id = u.id
+       WHERE ug.grupo_id = $1
+       ORDER BY u.username ASC`,
+      [group.id]
+    );
+    group.members = membersResult.rows;
+    return [group]; // Retorna como array para manter a consistência
+  }
+
+  return result.rows; // Retorna a lista de todos os grupos
 }
 
 // Grupo por ID com posts e membros
@@ -62,7 +84,14 @@ async function createGroup({ nome, descricao, ownerId }) {
      RETURNING id, nome, descricao, created_at, owner_id`,
     [nome, descricao || null, ownerId]
   );
-  return result.rows[0];
+  const newGroup = result.rows[0];
+
+  if (newGroup) {
+    // Automaticamente adiciona o criador como membro do grupo
+    await addUserToGroup({ usuarioId: ownerId, grupoId: newGroup.id });
+  }
+
+  return newGroup;
 }
 
 // Atualiza nome/descrição do grupo

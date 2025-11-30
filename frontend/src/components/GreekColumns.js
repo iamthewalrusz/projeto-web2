@@ -7,11 +7,11 @@ function GreekColumn({left}) {
 
       <Box height={'2vh'} width={'80%'} margin={'auto'} backgroundColor={'background.paper'} border={'1px solid'} borderColor={'primary.main'}/>
 
-      <Box height={'92vh'} width={'60%'} margin={'auto'} backgroundColor={'background.paper'} border={'1px solid'} borderColor={'primary.main'}>
+      <Box height={'84vh'} width={'60%'} margin={'auto'} backgroundColor={'background.paper'} border={'1px solid'} borderColor={'primary.main'}>
 
-        <Box height={'92vh'} width={'70%'} margin={'auto'} border={'1px solid'} borderColor={'primary.main'}>
+        <Box height={'84vh'} width={'70%'} margin={'auto'} border={'1px solid'} borderColor={'primary.main'}>
 
-          <Box height={'92vh'} width={'40%'} margin={'auto'} border={'1px solid'} borderColor={'primary.main'}></Box>
+          <Box height={'84vh'} width={'40%'} margin={'auto'} border={'1px solid'} borderColor={'primary.main'}></Box>
 
         </Box>
 

@@ -51,10 +51,22 @@ async function createPost(req, res, next) {
 async function updatePost(req, res, next) {
   try {
     const { id } = req.params;
-    const { texto } = req.body;
+    const { texto, userId } = req.body; // userId vem do frontend
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Autenticação necessária.' });
+    }
+
+    const post = await PostModel.getPostById(id);
+    if (!post) {
+      return res.status(404).json({ error: 'Post não encontrado' });
+    }
+
+    if (post.autor_id !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida. Você não é o autor deste post.' });
+    }
 
     const updated = await PostModel.updatePost(id, { texto });
-    if (!updated) return res.status(404).json({ error: 'Post não encontrado' });
 
     res.json(updated);
   } catch (err) {
@@ -66,9 +78,22 @@ async function updatePost(req, res, next) {
 async function deletePost(req, res, next) {
   try {
     const { id } = req.params;
+    const { userId } = req.body; // userId vem do frontend
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Autenticação necessária.' });
+    }
+
+    const post = await PostModel.getPostById(id);
+    if (!post) {
+      return res.status(404).json({ error: 'Post não encontrado' });
+    }
+
+    if (post.autor_id !== userId) {
+      return res.status(403).json({ error: 'Ação não permitida. Você não é o autor deste post.' });
+    }
 
     const deleted = await PostModel.deletePost(id);
-    if (!deleted) return res.status(404).json({ error: 'Post não encontrado' });
 
     res.json({ message: 'Post deletado com sucesso' });
   } catch (err) {

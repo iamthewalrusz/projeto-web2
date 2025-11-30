@@ -1,11 +1,21 @@
 // src/models/userModel.js
 const db = require('../config/db');
 
-// Lista todos os usuários (sem a senha)
-async function getAllUsers() {
-  const result = await db.query(
-    'SELECT id, username, email, created_at FROM usuarios ORDER BY id'
-  );
+// Lista todos os usuários (sem a senha), com filtro opcional por username
+async function getAllUsers({ username } = {}) {
+  let queryText = 'SELECT id, username, email, created_at FROM usuarios';
+  const params = [];
+
+  if (username) {
+    // busca por username exato (case-sensitive).
+    // para busca case-insensitive, poderia ser: WHERE LOWER(username) = LOWER($1)
+    params.push(username);
+    queryText += ` WHERE username = $1`;
+  }
+
+  queryText += ' ORDER BY username ASC';
+
+  const result = await db.query(queryText, params);
   return result.rows;
 }
 
@@ -21,8 +31,11 @@ async function getUserById(id) {
 
   // posts do usuário
   const postsResult = await db.query(
-    `SELECT p.id, p.texto, p.created_at, g.id AS grupo_id, g.nome AS grupo_nome
+    `SELECT p.id, p.texto, p.created_at, 
+            u.username AS autor_username,
+            g.id AS grupo_id, g.nome AS grupo_nome
      FROM posts p
+     JOIN usuarios u ON p.autor_id = u.id
      LEFT JOIN grupos g ON p.grupo_id = g.id
      WHERE p.autor_id = $1
      ORDER BY p.created_at DESC`,

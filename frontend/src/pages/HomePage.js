@@ -17,13 +17,7 @@ export default function HomePage() {
       setLoading(true);
       const response = await api.get("/posts"); // GET /api/posts
 
-      // backend retorna: texto, autor_username, etc.
-      const mapped = response.data.map((p) => ({
-        autor: p.autor_username,
-        texto: p.texto,
-      }));
-
-      setPostagens(mapped);
+      setPostagens(response.data);
     } catch (err) {
       console.error(err);
       setErro("Erro ao carregar postagens.");
@@ -56,7 +50,7 @@ export default function HomePage() {
           </Typography>
         )}
 
-        {!loading && !erro && <Posts postagens={postagens} />}
+        {!loading && !erro && <Posts postagens={postagens} onPostsChange={carregarPosts} />}
       </Box>
     </Box>
   );

@@ -36,7 +36,7 @@ export default function LoginModal() {
       });
 
       // backend devolve: { id, username, email, created_at }
-      localStorage.setItem('usuario', JSON.stringify(response.data));
+      localStorage.setItem('agora-usuario', JSON.stringify(response.data));
 
       // redireciona para Home
       navigate('/');

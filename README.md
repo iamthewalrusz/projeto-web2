@@ -2,13 +2,19 @@
 
 ---
 
+Ágora é uma aplicação web de rede social inspirada na edificação grega de mesmo nome,
+
 ## Pré-requisitos
 
 - Node.js instalado
 - Conta e banco configurados no NeonDB
-- Connection string do NeonDB no .env do backend
 
 ---
+
+## 🌐 Configuração do banco (NeonDB)
+- No painel SQL Editor, crie as tabelas com o script disponível no link do documento
+- No painel Connect, copie a connection string
+- No projeto, na pasta backend, dentro do arquivo .env, substitua o valor da variável DATABASE_URL para a connection string copiada. 
 
 ## 🧩 Configuração do back-end
 - Abra um terminal (**cmd** ou PowerShell)
@@ -25,6 +31,11 @@
 - Acesse a aplicação em: http://localhost:3000
 
 ---
+
+## 👥 Autores
+[Fabio Vivarelli]
+[Joao Vitor Gimenes dos Santos]
+[Nathan Henrique Guimaraes de Oliveira]
 
 link documento:
 https://docs.google.com/document/d/1SOUAvqXuJuBH7sNVBrbwBqMVkbef1UjvDXRB41Bwx5k/edit?pli=1&tab=t.0

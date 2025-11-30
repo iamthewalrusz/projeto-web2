@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -18,6 +18,16 @@ export default function Header({logged}) {
   const { toggleTheme, themeMode } = useContext(ThemeContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
+  const usuario = localStorage.getItem("agora-usuario");
+  const isLoggedIn = !!usuario;
+
+  const handleLogout = () => {
+    localStorage.removeItem("agora-usuario");
+    navigate('/login');
+    window.location.reload(); // Força a atualização do estado em toda a aplicação
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -79,22 +89,36 @@ export default function Header({logged}) {
             Início
           </Link>
         </MenuItem>
-        <MenuItem sx={{fontSize:'1.3rem'}} >
-          <Link to="/perfil/user_hard_coded" style={{textDecoration: 'none', color: 'inherit'}} >
-            Meu perfil
-          </Link>
-        </MenuItem>
-        <MenuItem sx={{fontSize:'1.3rem'}} >
-            <Link to="/grupo/grupo_hard_coded" style={{textDecoration: 'none', color: 'inherit'}} >
-                  Grupo
-            </Link>
-        </MenuItem>
-        {!logged && 
-          <MenuItem sx={{fontSize:'1.3rem'}} >
-              <Link to="/login" style={{textDecoration: 'none', color: 'inherit'}} >
-                  Login
-              </Link>
+
+        {isLoggedIn ? (
+
+            <>
+              <MenuItem sx={{fontSize:'1.3rem'}} >
+                <Link to={`/perfil/${JSON.parse(usuario).username}`} style={{textDecoration: 'none', color: 'inherit'}} >
+                  Meu perfil
+                </Link>
+              </MenuItem>
+
+              <MenuItem sx={{fontSize:'1.3rem'}} onClick={handleLogout} >
+                  Sair
+              </MenuItem>
+            </>
+          ) : (
+            <>
+            <MenuItem sx={{fontSize:'1.3rem'}} >
+                <Link to="/cadastrar" style={{textDecoration: 'none', color: 'inherit'}} >
+                    Cadastrar
+                </Link>
             </MenuItem>
+
+            <MenuItem sx={{fontSize:'1.3rem'}} >
+                <Link to="/login" style={{textDecoration: 'none', color: 'inherit'}} >
+                    Login
+                </Link>
+            </MenuItem>
+            </>
+          )
+
         }
 
         <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
