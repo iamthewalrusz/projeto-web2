@@ -10,7 +10,7 @@ Os usuários podem se cadastrar, entrar em grupos e publicar mensagens (postagen
 - **Backend:** Node.js, Express
 - **Frontend:** React, Material UI
 - **Banco de dados:** PostgreSQL (NeonDB)
-- **Autenticação:** senhas com hash (bcrypt) e sessão via `localStorage`
+- **Autenticação:** senhas com hash (bcrypt) e sessão via localStorage
 
 ---
 
@@ -22,9 +22,10 @@ Os usuários podem se cadastrar, entrar em grupos e publicar mensagens (postagen
 ---
 
 ## 🌐 Configuração do banco (NeonDB)
-- No painel SQL Editor do Neon, crie as tabelas com o script disponível no link do documento
-- No painel Connect do Neon, copie a connection string
-- No projeto, na pasta backend, dentro do arquivo .env, substitua o valor da variável DATABASE_URL para a connection string copiada. 
+- Na pasta backend, dentro do arquivo script.sql, copie o script de criação das tabelas
+- No painel 'SQL Editor' do NeonDB, cole o script e aperte o botão 'Run'
+- No painel 'Dashboard' do NeonDB, aperte o botão 'Connect' e copie a connection string
+- Na pasta backend, dentro do arquivo .env, cole a connection string no valor da variável DATABASE_URL
 
 ## 🧩 Configuração do back-end
 - Abra um terminal (**cmd** ou PowerShell)
@@ -43,9 +44,9 @@ Os usuários podem se cadastrar, entrar em grupos e publicar mensagens (postagen
 ---
 
 ## 👥 Autores
-[Fabio Vivarelli]
-[Joao Vitor Gimenes dos Santos]
-[Nathan Henrique Guimaraes de Oliveira]
+-Fabio Vivarelli
+-Joao Vitor Gimenes dos Santos
+-Nathan Henrique Guimaraes de Oliveira
 
 🔗 link documento:
 https://docs.google.com/document/d/1SOUAvqXuJuBH7sNVBrbwBqMVkbef1UjvDXRB41Bwx5k/edit?pli=1&tab=t.0
