@@ -44,9 +44,9 @@ Os usuários podem se cadastrar, entrar em grupos e publicar mensagens (postagen
 ---
 
 ## 👥 Autores
--Fabio Vivarelli
--Joao Vitor Gimenes dos Santos
--Nathan Henrique Guimaraes de Oliveira
+- Fabio Vivarelli
+- Joao Vitor Gimenes dos Santos
+- Nathan Henrique Guimaraes de Oliveira
 
 🔗 link documento:
 https://docs.google.com/document/d/1SOUAvqXuJuBH7sNVBrbwBqMVkbef1UjvDXRB41Bwx5k/edit?pli=1&tab=t.0
